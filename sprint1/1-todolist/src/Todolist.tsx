@@ -1,29 +1,49 @@
 import React from 'react';
+import {Button} from "./components/Button";
+
+export type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
 
 type PropsType = {
     title: string
-    tasks: TaskType[]
+    tasks: Array<TaskType>
+    date?: string
 }
 
-export const Todolist = ({title, tasks}: PropsType) => {
+export const Todolist = ({title, tasks, date}: PropsType) => {
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button title={'+'}/>
             </div>
-            <ul>
-                <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                <li><input type="checkbox" checked={false}/> <span>React</span></li>
-            </ul>
+            {tasks.length === 0 ? (
+                <p>Тасков нет</p>
+            ) : (
+                <ul>
+                    {tasks.map(tasks => {
+                        return (
+                            <>
+                                <li>
+                                    <input type="checkbox" checked={tasks.isDone}/>
+                                    <span>{tasks.title}</span>
+                                </li>
+                            </>
+                        )
+                    })}
+                </ul>
+            )}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button title={'All'}/>
+                <Button title={'Active'}/>
+                <Button title={'Completed'}/>
             </div>
+            <div>{date}</div>
         </div>
-    );
-};
+    )
+}
 
